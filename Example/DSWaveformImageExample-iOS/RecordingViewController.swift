@@ -37,6 +37,7 @@ class RecordingViewController: UIViewController {
 
     @IBAction func didChangeSilence(_ sender: UISwitch) {
         waveformView.shouldDrawSilencePadding = sender.isOn
+        waveformView.silenceSample = 0.9
     }
 
     @IBAction func didChangeDampingPercentage(_ sender: UISlider) {

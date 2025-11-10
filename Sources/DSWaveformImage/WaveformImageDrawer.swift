@@ -10,6 +10,9 @@ public class WaveformImageDrawer: ObservableObject {
 
     /// only internal; determines whether to draw silence lines in live mode.
     public var shouldDrawSilencePadding: Bool = false
+    
+    /// slience default sample
+    public var silenceSample: Float = 1
 
     /// Makes sure we always look at the same samples while animating
     private var lastOffset: Int = 0
@@ -93,7 +96,10 @@ extension WaveformImageDrawer {
         let startSample = max(0, samples.count - samplesNeeded)
         let clippedSamples = Array(samples[startSample..<samples.count])
         let dampedSamples = configuration.shouldDamp ? damp(clippedSamples, with: configuration) : clippedSamples
-        let paddedSamples = shouldDrawSilencePadding ? Array(repeating: 1, count: samplesNeeded - clippedSamples.count) + dampedSamples : dampedSamples
+        
+        // add: slience default sample
+        let silenceSample = self.silenceSample // default is 1
+        let paddedSamples = shouldDrawSilencePadding ? Array(repeating: silenceSample, count: samplesNeeded - clippedSamples.count) + dampedSamples : dampedSamples
         
         draw(on: context, from: paddedSamples, with: configuration, renderer: renderer, position: position)
     }

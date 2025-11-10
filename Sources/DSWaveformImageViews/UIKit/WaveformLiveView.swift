@@ -16,6 +16,12 @@ public class WaveformLiveView: UIView {
             sampleLayer.shouldDrawSilencePadding = shouldDrawSilencePadding
         }
     }
+    
+    public var silenceSample: Float = 1 {
+        didSet {
+            sampleLayer.silenceSample = silenceSample
+        }
+    }
 
     public var configuration: Waveform.Configuration {
         didSet {
@@ -106,6 +112,13 @@ class WaveformLiveLayer: CALayer {
     var shouldDrawSilencePadding: Bool = false {
         didSet {
             waveformDrawer.shouldDrawSilencePadding = shouldDrawSilencePadding
+            setNeedsDisplay()
+        }
+    }
+    
+    public var silenceSample: Float = 1 {
+        didSet {
+            waveformDrawer.silenceSample = silenceSample
             setNeedsDisplay()
         }
     }
